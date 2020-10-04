@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+. versions
+docker build \
+	-t windows-installer \
+	-f Dockerfile.windows \
+	--build-arg DOCKER_RELEASE_STAGE="${DOCKER_RELEASE_STAGE}" \
+	--build-arg INSTALLER_VERSION="${INSTALLER_VERSION}" \
+	--build-arg DOCKER_VERSION="${DOCKER_VERSION}" \
+	--build-arg DOCKER_COMPOSE_VERSION="${DOCKER_COMPOSE_VERSION}" \
+	--build-arg DOCKER_MACHINE_VERSION="${DOCKER_MACHINE_VERSION}" \
+	--build-arg KITEMATIC_VERSION="${KITEMATIC_VERSION}" \
+	--build-arg VBOX_VERSION="${VBOX_VERSION}" \
+	--build-arg VBOX_REV_WIN="${VBOX_REV_WIN}" \
+	--build-arg MIXPANEL_TOKEN="${MIXPANEL_TOKEN}" \
+	.
+CONTAINER="$(docker create windows-installer)"
+mkdir -p dist
+docker cp "${CONTAINER}":/installer/Output/Toolbox2docker.exe \
+		dist/Toolbox2docker-${DOCKER_VERSION}.exe
+docker rm "${CONTAINER}" 2>/dev/null || true

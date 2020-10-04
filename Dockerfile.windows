@@ -1,0 +1,72 @@
+FROM dockercore/golang-cross:latest
+
+ENV DEBIAN_FRONTEND noninteractive
+
+ARG DOCKER_RELEASE_STAGE
+ARG INSTALLER_VERSION
+ARG DOCKER_VERSION
+ARG DOCKER_COMPOSE_VERSION
+ARG DOCKER_MACHINE_VERSION
+ARG KITEMATIC_VERSION
+ARG VBOX_VERSION
+ARG VBOX_REV_WIN
+ARG MIXPANEL_TOKEN
+
+RUN dpkg --add-architecture i386
+RUN sed -i "s/main/main contrib non-free/" /etc/apt/sources.list
+RUN apt-get update && apt-get install -yq wine curl unrar unzip
+
+# innosetup
+RUN mkdir /innosetup && \
+    cd /innosetup && \
+    curl -fsSL -o innounp045.rar "https://downloads.sourceforge.net/project/innounp/innounp/innounp%200.45/innounp045.rar?r=&ts=1439566551&use_mirror=skylineservers" && \
+    unrar e innounp045.rar
+
+RUN cd /innosetup && \
+    curl -fsSL -o is-unicode.exe http://files.jrsoftware.org/is/5/isetup-5.5.8-unicode.exe && \
+    wine "./innounp.exe" -e "is-unicode.exe"
+
+ENV GIT_VERSION 2.28.0
+
+# Build CLI binary
+RUN mkdir -p /go/src/github.com/docker/
+
+RUN git clone https://github.com/docker/docker-ce.git /docker-ce && \
+    cd /docker-ce && \
+    git checkout "v${DOCKER_VERSION}" && \
+    cp -R components/cli /go/src/github.com/docker/
+
+WORKDIR /go/src/github.com/docker/cli
+RUN VERSION=$DOCKER_VERSION GITCOMMIT=$(cd /docker-ce && git rev-parse --short HEAD) ./scripts/build/windows
+
+# Assemble bundle
+RUN mkdir /bundle
+
+WORKDIR /bundle
+
+RUN cp /go/src/github.com/docker/cli/build/docker-windows-amd64 docker.exe
+
+RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
+
+RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
+
+RUN curl -fsSL -o boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION/boot2docker.iso
+
+RUN curl -fsSL -o kitematic.zip "https://github.com/kitematic/kitematic/releases/download/v$KITEMATIC_VERSION/Kitematic-$KITEMATIC_VERSION-Windows.zip" && \
+    mkdir kitematic && \
+    cd kitematic && \
+    unzip ../kitematic.zip && \
+    rm ../kitematic.zip
+RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-64-bit.exe"
+RUN curl -fsSL -o virtualbox.exe "http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VirtualBox-$VBOX_VERSION-$VBOX_REV_WIN-Win.exe" \
+	&& echo "$(curl -fsSL 'https://virtualbox.org/download/hashes/'"$VBOX_VERSION"'/SHA256SUMS' | awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" | sha256sum -c -
+RUN wine virtualbox.exe -extract -silent -path . && \
+	  rm virtualbox.exe && \
+	  mv *.msi VirtualBox_amd64.msi
+
+# Add installer resources
+COPY windows /installer
+
+WORKDIR /installer
+RUN rm -rf /tmp/.wine-0/
+RUN wine ../innosetup/ISCC.exe Toolbox.iss /DMyAppVersion=$INSTALLER_VERSION /DMixpanelToken=$MIXPANEL_TOKEN
