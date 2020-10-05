@@ -10,13 +10,14 @@ See [Ceasing Support and Development of Docker Toolbox #898](https://github.com/
 
 Why a fork? I still find it useful.
 
+XXX TODO: fix documentation
+
+
 The Toolbox2docker installs everything you need to get started with
 Docker on Mac OS X and Windows. It includes the Docker client, Compose,
 Machine, Kitematic, and VirtualBox.
 
 ## Installation and documentation
-
-XXX
 
 Documentation for Mac [is available here](https://docs.docker.com/toolbox/toolbox_install_mac/).
 
