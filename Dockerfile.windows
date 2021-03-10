@@ -26,7 +26,7 @@ RUN cd /innosetup && \
     curl -fsSL -o is-unicode.exe http://files.jrsoftware.org/is/5/isetup-5.5.8-unicode.exe && \
     wine "./innounp.exe" -e "is-unicode.exe"
 
-ENV GIT_VERSION 2.30.1
+ENV GIT_VERSION 2.30.2
 
 # Build CLI binary
 RUN mkdir -p /go/src/github.com/docker/cli
