@@ -5,6 +5,7 @@ ARG INSTALLER_VERSION
 ARG DOCKER_VERSION
 ARG DOCKER_COMPOSE_VERSION
 ARG DOCKER_MACHINE_VERSION
+ARG GITLAB_MACHINE_VERSION
 ARG KITEMATIC_VERSION
 ARG VBOX_VERSION
 ARG VBOX_REV
@@ -41,7 +42,9 @@ RUN curl -fsSL -o dockerbins.tgz "https://download.docker.com/mac/static/${DOCKE
     rm dockerbins.tgz
 RUN chmod +x /docker
 
-RUN curl -fsSL -o /docker-machine https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Darwin-x86_64
+#RUN curl -fsSL -o /docker-machine https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Darwin-x86_64
+RUN curl -fsSL -o /docker-machine https://gitlab-docker-machine-downloads.s3.amazonaws.com/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION/docker-machine-Darwin-x86_64
+
 RUN chmod +x /docker-machine
 
 RUN curl -fsSL -o /docker-compose https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Darwin-x86_64
