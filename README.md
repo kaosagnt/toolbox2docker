@@ -10,6 +10,32 @@ See [Ceasing Support and Development of Docker Toolbox #898](https://github.com/
 
 Why a fork? I still find it useful.
 
+NOTE: docker-machine will pull by default the obsoleted boot2docker project ISO.
+
+To get around this issue you will need to use the docker-machine option to point
+the URL to the boot2docker.iso file that ships with this toolbox2docker distribution
+and manually create a virtual machine.
+
+	docker-machine create -d ${VIRTUAL_DRIVER} ${VIRTUAL_MEMORY} \
+	--${VIRTUAL_DRIVER}-boot2docker-url "file://some/path/to/file" \
+	${VIRTUAL_CPU_COUNT} ${VIRTUAL_SWITCH} ${VM_MACHINE_NAME}
+
+	--${VIRTUAL_DRIVER}-boot2docker-url file://path/to/boot2docker.iso"
+	
+	where ${VIRTUAL_driver} is the driver for the Virtual machine software you are using
+		virtualbox
+		vmware
+		vmwarefusion
+		hyperv
+
+This will also give your VM the XFS filesystem instead of EXT4 as it will be
+created with the correct ISO.
+
+The location of the boot2docker ISO on a default install:
+
+	macOS: /usr/local/share/boot2docker/boot2docker.iso
+	windows: /c/Program Files/toolbox2docker/boot2docker.iso
+
 XXX TODO: fix documentation
 
 
