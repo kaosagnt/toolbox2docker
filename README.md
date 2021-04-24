@@ -20,7 +20,7 @@ and manually create a virtual machine.
 	--${VIRTUAL_DRIVER}-boot2docker-url "file://some/path/to/file" \
 	${VIRTUAL_CPU_COUNT} ${VIRTUAL_SWITCH} ${VM_MACHINE_NAME}
 
-	--${VIRTUAL_DRIVER}-boot2docker-url file://path/to/boot2docker.iso"
+	--${VIRTUAL_DRIVER}-boot2docker-url "file://path/to/boot2docker.iso"
 	
 	where ${VIRTUAL_driver} is the driver for the Virtual machine software you are using
 		virtualbox
