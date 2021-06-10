@@ -8,6 +8,7 @@ ARG DOCKER_VERSION
 ARG DOCKER_COMPOSE_VERSION
 ARG DOCKER_MACHINE_VERSION
 ARG GITLAB_MACHINE_VERSION
+ARG GIT_VERSION
 ARG KITEMATIC_VERSION
 ARG VBOX_VERSION
 ARG VBOX_REV_WIN
@@ -26,8 +27,6 @@ RUN mkdir /innosetup && \
 RUN cd /innosetup && \
     curl -fsSL -o is-unicode.exe http://files.jrsoftware.org/is/5/isetup-5.5.8-unicode.exe && \
     wine "./innounp.exe" -e "is-unicode.exe"
-
-ENV GIT_VERSION 2.31.1
 
 # Download CLI binary
 # Docker cli github repo now builds binarys for multiple windows targets.
