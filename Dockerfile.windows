@@ -8,6 +8,7 @@ ARG DOCKER_VERSION
 ARG DOCKER_COMPOSE_VERSION
 ARG DOCKER_MACHINE_VERSION
 ARG GITLAB_MACHINE_VERSION
+ARG T2D_MACHINE_VERSION
 ARG GIT_VERSION
 ARG KITEMATIC_VERSION
 ARG VBOX_VERSION
@@ -44,7 +45,8 @@ WORKDIR /bundle
 RUN cp /go/docker/docker.exe .
 
 #RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
-RUN curl -fsSL -o docker-machine.exe "https://gitlab-docker-machine-downloads.s3.amazonaws.com/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
+#RUN curl -fsSL -o docker-machine.exe "https://gitlab-docker-machine-downloads.s3.amazonaws.com/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
+RUN curl -fsSL -o docker-machine.exe "https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
 
 RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
 
