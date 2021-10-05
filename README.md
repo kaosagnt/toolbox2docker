@@ -10,7 +10,21 @@ See [Ceasing Support and Development of Docker Toolbox #898](https://github.com/
 
 Why a fork? I still find it useful.
 
-NOTE: docker-machine will pull by default the obsoleted boot2docker project ISO.
+NOTE: 
+
+Releases >= 20.10.9:
+
+docker-machine has now been patched to pull the boot2docker-xfs-ng ISO from
+the [kaosagnt/boot2docker-xfs-ng](https://github.com/kaosagnt/boot2docker-xfs-ng)
+repository.
+
+This version of docker-machine contains all patches from the GitLab fork and
+contains other fixes on top. It will continue to pull in patches from GitLab.
+The Source tree can be found at [kaosagnt/docker-machine](https://github.com/kaosagnt/docker-machine).
+
+Previous releases <=20.10.8:
+
+docker-machine will pull by default the obsoleted boot2docker project ISO.
 
 To get around this issue you will need to use the docker-machine option to point
 the URL to the boot2docker.iso file that ships with this toolbox2docker distribution
