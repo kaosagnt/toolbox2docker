@@ -7,6 +7,7 @@
 #define dockerCli "..\bundle\docker.exe"
 #define dockerMachineCli "..\bundle\docker-machine.exe"
 #define dockerComposeCli "..\bundle\docker-compose.exe"
+#define dockerCompose2Cli "..\bundle\plugin\docker-compose.exe"
 #define kitematic "..\bundle\kitematic"
 #define git "..\bundle\Git.exe"
 #define virtualBoxCommon "..\bundle\common.cab"
@@ -59,6 +60,7 @@ Name: vbox_ndis5; Description: "Install VirtualBox with NDIS5 driver[default NDI
 Name: "Docker"; Description: "Docker Client for Windows" ; Types: full custom; Flags: fixed
 Name: "DockerMachine"; Description: "Docker Machine for Windows" ; Types: full custom; Flags: fixed
 Name: "DockerCompose"; Description: "Docker Compose for Windows" ; Types: full custom
+Name: "DockerCompose2"; Description: "Docker Compose plugin for Windows" ; Types: full custom
 Name: "VirtualBox"; Description: "VirtualBox"; Types: full custom; Flags: disablenouninstallwarning
 Name: "Kitematic"; Description: "Kitematic for Windows (Alpha)" ; Types: full custom
 Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablenouninstallwarning
@@ -70,6 +72,7 @@ Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docke
 Source: ".\docker-start.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 Source: "{#dockerComposeCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerCompose"
+Source: "{#dockerCompose2Cli}"; DestDir: "\ProgramData\Docker\cli-plugins"; Flags: ignoreversion; Components: "DockerCompose2"
 Source: "{#kitematic}\*"; DestDir: "{app}\kitematic"; Flags: ignoreversion recursesubdirs; Components: "Kitematic"
 Source: "{#b2dIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyBoot2DockerISO()
 Source: "{#git}"; DestDir: "{app}\installers\git"; DestName: "git.exe"; AfterInstall: RunInstallGit();  Components: "Git"

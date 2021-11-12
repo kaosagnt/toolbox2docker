@@ -6,6 +6,7 @@ ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
 ARG DOCKER_VERSION
 ARG DOCKER_COMPOSE_VERSION
+ARG DOCKER_COMPOSE2_VERSION
 ARG DOCKER_MACHINE_VERSION
 ARG GITLAB_MACHINE_VERSION
 ARG T2D_MACHINE_VERSION
@@ -39,7 +40,7 @@ RUN curl -fsSL -o dockerbins.zip "https://download.docker.com/win/static/${DOCKE
     rm dockerbins.zip
 
 # Assemble bundle
-RUN mkdir /bundle
+RUN mkdir -p /bundle/plugin
 
 WORKDIR /bundle
 
@@ -50,6 +51,9 @@ RUN cp /go/docker/docker.exe .
 RUN curl -fsSL -o docker-machine.exe "https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
 
 RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
+
+# Docker compose 2.x
+RUN curl -fsSL -o plugin/docker-compose.exe "https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE2_VERSION/docker-compose-windows-x86_64.exe"
 
 RUN curl -fsSL -o boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION/boot2docker.iso
 
