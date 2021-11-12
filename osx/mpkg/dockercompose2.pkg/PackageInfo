@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pkg-info overwrite-permissions="true" relocatable="false" identifier="io.docker.pkg.dockercompose2" postinstall-action="none" version="%DOCKERCOMPOSE2_VERSION%" format-version="2" generator-version="steeve's strong hands" install-location="/" auth="root">
+    <payload numberOfFiles="%DOCKERCOMPOSE2_NUMBER_OF_FILES%" installKBytes="%DOCKERCOMPOSE2_INSTALL_KBYTES%"/>
+    <bundle-version/>
+    <upgrade-bundle/>
+    <update-bundle/>
+    <atomic-update-bundle/>
+    <strict-identifier/>
+    <relocate/>
+</pkg-info>
