@@ -4,6 +4,7 @@ ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
 ARG DOCKER_VERSION
 ARG DOCKER_COMPOSE_VERSION
+ARG DOCKER_COMPOSE2_VERSION
 ARG DOCKER_MACHINE_VERSION
 ARG GITLAB_MACHINE_VERSION
 ARG T2D_MACHINE_VERSION
@@ -51,6 +52,10 @@ RUN chmod +x /docker-machine
 
 RUN curl -fsSL -o /docker-compose https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Darwin-x86_64
 RUN chmod +x /docker-compose
+
+# Docker Compose 2.x is now a plugin.
+RUN curl -fsSL -o /docker-compose2 https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE2_VERSION/docker-compose-darwin-x86_64
+RUN chmod +x /docker-compose2
 
 RUN curl -fsSL -o /boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION/boot2docker.iso
 RUN curl -fsSL -o /kitematic.zip https://github.com/kitematic/kitematic/releases/download/v$KITEMATIC_VERSION/Kitematic-$KITEMATIC_VERSION-Mac.zip
@@ -149,6 +154,24 @@ RUN cd /mpkg/dockercompose.pkg && \
 	cd .. && \
 	rm -rf ./rootfs
 
+# dockercompose2.pkg
+COPY osx/mpkg/dockercompose2.pkg /mpkg/dockercompose2.pkg
+RUN cd /mpkg/dockercompose2.pkg && \
+	mkdir rootfs && \
+	cd rootfs && \
+  mkdir -p usr/local/lib/docker/cli-plugins && \
+  mv /docker-compose2 usr/local/lib/docker/cli-plugins/docker-compose && \
+  ls -al usr/local/lib/docker/cli-plugins && \
+	find . | cpio -o --format odc | gzip -c > ../Payload && \
+	mkbom . ../Bom && \
+	sed -i \
+		-e "s/%DOCKERCOMPOSE2_NUMBER_OF_FILES%/`find . | wc -l`/g" \
+		-e "s/%DOCKERCOMPOSE2_INSTALL_KBYTES%/`du -sk | cut -f1`/g" \
+		-e "s/%DOCKERCOMPOSE2_VERSION%/$DOCKER_COMPOSE2_VERSION/g" \
+		../PackageInfo /mpkg/Distribution && \
+	cd .. && \
+	rm -rf ./rootfs
+
 # boot2dockeriso.pkg
 COPY osx/mpkg/boot2dockeriso.pkg /mpkg/boot2dockeriso.pkg
 RUN cd /mpkg/boot2dockeriso.pkg && \
@@ -205,6 +228,7 @@ RUN sed -i \
 		-e "s/%DOCKER_VERSION%/$DOCKER_VERSION/g" \
 		-e "s/%DOCKERMACHINE_VERSION%/$DOCKER_MACHINE_VERSION/g" \
 		-e "s/%DOCKERCOMPOSE_VERSION%/$DOCKER_COMPOSE_VERSION/g" \
+		-e "s/%DOCKERCOMPOSE2_VERSION%/$DOCKER_COMPOSE2_VERSION/g" \
 		-e "s/%DOCKER_VERSION%/$DOCKER_VERSION/g" \
 		-e "s/%DOCKERQUICKSTARTTERMINALAPP_VERSION%/$INSTALLER_VERSION/g" \
 		-e "s/%KITEMATICAPP_VERSION%/$KITEMATIC_VERSION/g" \

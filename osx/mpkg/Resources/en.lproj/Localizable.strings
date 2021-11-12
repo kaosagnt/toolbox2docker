@@ -9,6 +9,9 @@
 'choiceDockerComposeCLI_title' = 'Docker Compose %DOCKERCOMPOSE_VERSION%';
 'choiceDockerComposeCLI_msg' = 'Installs the Docker Compose binary into /usr/local/bin/';
 
+'choiceDockerCompose2CLI_title' = 'Docker Compose %DOCKERCOMPOSE2_VERSION% plugin';
+'choiceDockerCompose2CLI_msg' = 'Installs the Docker Compose binary into /usr/local/lib/docker/cli-plugins';
+
 'choiceBoot2DockerISO_title' = 'Boot2Docker ISO %BOOT2DOCKER_ISO_VERSION%';
 'choiceBoot2DockerISO_msg' = 'Installs the boot2docker.iso into /usr/local/share/';
 
