@@ -22,5 +22,5 @@ docker build \
 CONTAINER="$(docker create osx-installer)"
 mkdir -p dist
 docker cp "${CONTAINER}":/Toolbox2docker.pkg \
-		dist/Toolbox2docker-${DOCKER_VERSION}.pkg
+		dist/Toolbox2docker-${INSTALLER_VERSION}.pkg
 docker rm "${CONTAINER}" 2>/dev/null || true

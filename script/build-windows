@@ -24,5 +24,5 @@ docker build \
 CONTAINER="$(docker create windows-installer)"
 mkdir -p dist
 docker cp "${CONTAINER}":/installer/Output/Toolbox2docker.exe \
-		dist/Toolbox2docker-${DOCKER_VERSION}.exe
+		dist/Toolbox2docker-${INSTALLER_VERSION}.exe
 docker rm "${CONTAINER}" 2>/dev/null || true
