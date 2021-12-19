@@ -5,6 +5,8 @@
 
 #define b2dIsoPath "..\bundle\boot2docker.iso"
 #define dockerCli "..\bundle\docker.exe"
+#define dockerAppCli "..\bundle\plugin\docker-app.exe"
+#define dockerBuildxCli "..\bundle\plugin\docker-buildx.exe"
 #define dockerMachineCli "..\bundle\docker-machine.exe"
 #define dockerComposeCli "..\bundle\docker-compose.exe"
 #define dockerCompose2Cli "..\bundle\plugin\docker-compose.exe"
@@ -70,6 +72,8 @@ Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
 Source: ".\docker-start.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
+Source: "{#dockerAppCli}"; DestDir: "\ProgramData\Docker\cli-plugins"; Flags: ignoreversion; Components: "Docker"
+Source: "{#dockerBuildxCli}"; DestDir: "\ProgramData\Docker\cli-plugins"; Flags: ignoreversion; Components: "Docker"
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 Source: "{#dockerComposeCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerCompose"
 Source: "{#dockerCompose2Cli}"; DestDir: "\ProgramData\Docker\cli-plugins"; Flags: ignoreversion; Components: "DockerCompose2"

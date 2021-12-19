@@ -44,7 +44,8 @@ RUN mkdir -p /bundle/plugin
 
 WORKDIR /bundle
 
-RUN cp /go/docker/docker.exe .
+RUN cp /go/docker/docker.exe .; \
+	cp /go/docker/cli-plugins/* plugin/
 
 #RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
 #RUN curl -fsSL -o docker-machine.exe "https://gitlab-docker-machine-downloads.s3.amazonaws.com/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"

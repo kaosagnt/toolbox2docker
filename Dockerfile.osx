@@ -41,8 +41,10 @@ RUN curl -fsSL -o /vbox.dmg http://download.virtualbox.org/virtualbox/$VBOX_VERS
 # `usr/local/bin` part and drop the bin in the current directory.
 RUN curl -fsSL -o dockerbins.tgz "https://download.docker.com/mac/static/${DOCKER_RELEASE_STAGE}/x86_64/docker-${DOCKER_VERSION}.tgz" && \
     tar xvf dockerbins.tgz docker/docker --strip-components 1 && \
+    tar xvf dockerbins.tgz docker/cli-plugins/docker-buildx \
+			docker/cli-plugins/docker-app --strip-components 1 && \
     rm dockerbins.tgz
-RUN chmod +x /docker
+RUN chmod +x /docker && chmod +x /cli-plugins/*
 
 #RUN curl -fsSL -o /docker-machine https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Darwin-x86_64
 #RUN curl -fsSL -o /docker-machine https://gitlab-docker-machine-downloads.s3.amazonaws.com/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION/docker-machine-Darwin-x86_64
@@ -87,9 +89,11 @@ COPY osx/mpkg/docker.pkg /mpkg/docker.pkg
 RUN cd /mpkg/docker.pkg && \
 	mkdir rootfs && \
 	cd rootfs && \
-  mkdir -p usr/local/bin && \
-  mv /docker usr/local/bin/ && \
-  ls -al /usr/local/bin/ && \
+	mkdir -p usr/local/bin && \
+	mv /docker usr/local/bin/ && \
+	mkdir -p usr/local/lib/docker/cli-plugins && \
+	mv /cli-plugins/* usr/local/lib/docker/cli-plugins/ && \
+	ls -al /usr/local/bin/ && \
 	find . | cpio -o --format odc | gzip -c > ../Payload && \
 	mkbom . ../Bom && \
 	sed -i \
