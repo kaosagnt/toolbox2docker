@@ -50,6 +50,34 @@ The location of the boot2docker ISO on a default install:
 	macOS: /usr/local/share/boot2docker/boot2docker.iso
 	windows: /c/Program Files/toolbox2docker/boot2docker.iso
 
+
+NOTE: Virtualbox on macOS requires manual intervention to workaround a
+Virtualbox security feature. [See:](https://www.virtualbox.org/ticket/20626)
+
+	(default) Found a new host-only adapter: "vboxnet0"
+	Error creating machine: Error in driver during machine creation: Error setting up host only network on machine start: /usr/local/bin/VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.99.1 --netmask 255.255.255.0 failed:
+	VBoxManage: error: Code E_ACCESSDENIED (0x80070005) - Access denied (extended info not available)
+	VBoxManage: error: Context: "EnableStaticIPConfig(Bstr(pszIp).raw(), Bstr(pszNetmask).raw())" at line 242 of file VBoxManageHostonly.cpp
+
+Before running the "Docker Quickstart Terminal" for the first time, follow
+the insrtuctions in the Virtualbox [Manual](https://www.virtualbox.org/manual/ch06.html)
+
+Section: 6.7. Host-Only Networking
+
+	On Linux, Mac OS X and Solaris Oracle VM VirtualBox will only allow IP addresses in 192.168.56.0/21 range to be assigned to host-only adapters. For IPv6 only link-local addresses are allowed. If other ranges are desired, they can be enabled by creating /etc/vbox/networks.conf and specifying allowed ranges there. For example, to allow 10.0.0.0/8 and 192.168.0.0/16 IPv4 ranges as well as 2001::/64 range put the following lines into /etc/vbox/networks.conf:
+	
+	* 10.0.0.0/8 192.168.0.0/16
+	* 2001::/64
+	
+	Lines starting with the hash # are ignored. Next example allows any addresses, effectively disabling range control:
+	
+	* 0.0.0.0/0 ::/0
+
+If the file exists, but no ranges are specified in it, no addresses will be assigned to host-only adapters. The following example effectively disables all ranges:
+
+	# No addresses are allowed for host-only adapters
+
+
 XXX TODO: fix documentation
 
 
