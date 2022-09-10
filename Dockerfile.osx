@@ -42,7 +42,7 @@ RUN curl -fsSL -o /vbox.dmg http://download.virtualbox.org/virtualbox/$VBOX_VERS
 RUN curl -fsSL -o dockerbins.tgz "https://download.docker.com/mac/static/${DOCKER_RELEASE_STAGE}/x86_64/docker-${DOCKER_VERSION}.tgz" && \
     tar xvf dockerbins.tgz docker/docker --strip-components 1 && \
     tar xvf dockerbins.tgz docker/cli-plugins/docker-buildx \
-			docker/cli-plugins/docker-app --strip-components 1 && \
+			--strip-components 1 && \
     rm dockerbins.tgz
 RUN chmod +x /docker && chmod +x /cli-plugins/*
 
