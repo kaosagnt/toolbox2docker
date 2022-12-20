@@ -13,7 +13,7 @@ ARG VBOX_VERSION
 ARG VBOX_REV
 ARG MIXPANEL_TOKEN
 
-RUN apt-get update && apt-get -y install \
+RUN apt-get update && apt-get -y --force-yes install \
 		autoconf build-essential curl \
 		libxml2-dev libssl-dev libbz2-dev \
 		p7zip-full \
