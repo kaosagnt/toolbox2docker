@@ -31,9 +31,10 @@ RUN curl -fsSL https://github.com/mackyle/xar/archive/xar-1.6.1.tar.gz | tar xvz
 	./autogen.sh && ./configure && \
 	make && make install
 
+ENV VBOX_DIR https://download.virtualbox.org/virtualbox/$VBOX_VERSION
 
-RUN curl -fsSL -o /vbox.dmg http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VirtualBox-$VBOX_VERSION-$VBOX_REV-OSX.dmg \
-	&& echo "$(curl -fsSL 'https://virtualbox.org/download/hashes/'"$VBOX_VERSION"'/SHA256SUMS' | awk '$2 ~ /-OSX.dmg$/ { print $1 }') */vbox.dmg" | sha256sum -c -
+RUN curl -fsSL -o /vbox.dmg "$VBOX_DIR/VirtualBox-$VBOX_VERSION-$VBOX_REV-OSX.dmg" \
+	&& echo "$(curl -fsSL "$VBOX_DIR"'/SHA256SUMS' | awk '$2 ~ /-OSX.dmg$/ { print $1 }') */vbox.dmg" | sha256sum -c -
 
 # Why '--strip-components 3'?  The client binary is in usr/local/bin/docker in
 # the tar archive.  If we extract directly, it will create a usr/local/bin
