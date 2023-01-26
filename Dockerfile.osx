@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:bullseye-slim
 
 ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
@@ -13,11 +13,15 @@ ARG VBOX_VERSION
 ARG VBOX_REV
 ARG MIXPANEL_TOKEN
 
-RUN apt-get update && apt-get -y --force-yes install \
-		autoconf build-essential curl \
+RUN echo "deb http://deb.debian.org/debian bullseye-backports main" \
+	> /etc/apt/sources.list.d/backports.list && \
+		apt-get update && \
+		apt-get -y install \
+		apt-utils autoconf build-essential curl \
 		libxml2-dev libssl-dev libbz2-dev \
-		p7zip-full \
-		hfsplus hfsutils hfsprogs cpio
+		zlib1g-dev \
+		cpio \
+		&& apt-get -y install -t bullseye-backports 7zip
 
 # We need the bomutils to create the Mac OS X Bill of Materials (BOM) files.
 # https://github.com/hogliux/bomutils
@@ -28,6 +32,8 @@ RUN curl -fsSL https://github.com/hogliux/bomutils/archive/0.2.tar.gz | tar xvz 
 # Needed to pack/unpack the .pkg files
 RUN curl -fsSL https://github.com/mackyle/xar/archive/xar-1.6.1.tar.gz | tar xvz && \
 	cd xar-*/xar && \
+	sed -i 's/OpenSSL_add_all_ciphers/OPENSSL_init_crypto/g' \
+	/xar-*/xar/configure.ac && \
 	./autogen.sh && ./configure && \
 	make && make install
 
@@ -66,11 +72,9 @@ RUN curl -fsSL -o /kitematic.zip https://github.com/kitematic/kitematic/releases
 #  Extract the VirtualBox .pkg
 RUN mkdir -p /mpkg/vbox && \
 	cd /mpkg/vbox && \
-	7z x /vbox.dmg -ir'!*.hfs' && \
-	7z x `find . -name '*.hfs'` -ir'!*.pkg' && \
+	7zz x /vbox.dmg -ir'!*.pkg' && \
 	mv VirtualBox/VirtualBox.pkg . && \
-	rm -rf vbox.dmg && \
-	rm -rf `find . -name '*.hfs'`
+	rm -rf vbox.dmg
 
 # Extract the .pkg files
 RUN cd /mpkg/vbox && \
@@ -110,7 +114,7 @@ COPY osx/mpkg/kitematicapp.pkg /mpkg/kitematicapp.pkg
 RUN cd /mpkg/kitematicapp.pkg && \
 	mkdir ./rootfs && \
 	cd ./rootfs && \
-  7z x /kitematic.zip && \
+  7zz x /kitematic.zip && \
   rm -rf ./__MACOSX && \
   ls -al . && \
 	find . | cpio -o --format odc | gzip -c > ../Payload && \
