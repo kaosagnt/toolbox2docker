@@ -21,23 +21,16 @@
 }
 
 - (void) willEnterPane:(InstallerSectionDirection)dir {
-    BOOL kitematicInstalled = [[NSFileManager defaultManager] fileExistsAtPath:@"/Applications/Docker/Kitematic (Beta).app"];
     BOOL quickstartInstalled = [[NSFileManager defaultManager] fileExistsAtPath:@"/Applications/Docker/Docker Quickstart Terminal.app"];
-    
-    self.kitematicImageView.image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"kitematic" ofType:@"png"]];
+
     self.quickstartImageView.image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"quickstart" ofType:@"png"]];
-    
-    if (!kitematicInstalled) {
-        self.kitematicImageView.enabled = NO;
-        self.kitematicLabel.enabled = NO;
-    }
 
     if (!quickstartInstalled) {
         self.quickstartImageView.enabled = NO;
         self.quickstartLabel.enabled = NO;
     }
 
-    if (dir == InstallerDirectionForward && !kitematicInstalled && !quickstartInstalled) {
+    if (dir == InstallerDirectionForward && !quickstartInstalled) {
         [self gotoNextPane];
     }
 }
@@ -54,11 +47,6 @@
     task.launchPath = @"/usr/bin/open";
     task.arguments = @[@"/Applications/Docker/Docker Quickstart Terminal.app"];
     [task launch];
-}
-
-- (IBAction)kitematicClicked:(id)sender {
-    [Mixpanel trackEvent:@"Installer Finished" forPane:self withProperties:[[NSDictionary alloc] initWithObjectsAndKeys:@"Kitematic", @"action", nil]];
-    [[NSWorkspace sharedWorkspace] launchApplication:@"Kitematic (Beta)"];
 }
 
 @end

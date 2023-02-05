@@ -9,7 +9,6 @@
         <line choice="choiceDockerMachineCLI"/>
         <line choice="choiceDockerCompose2CLI"/>
         <line choice="choiceDockerQuickstartTerminalAPP"/>
-        <line choice="choiceKitematicAPP"/>
         <line choice="choiceVBox"/>
         <line choice="choiceBoot2DockerISO"/>
     </choices-outline>
@@ -19,19 +18,12 @@
     <choice id="choiceDockerCompose2CLI" title="choiceDockerCompose2CLI_title" description="choiceDockerCompose2CLI_msg" start_selected="true" start_enabled="true" start_visible="true">
         <pkg-ref id="io.docker.pkg.dockercompose2"/>
     </choice>
-    <choice id="choiceKitematicAPP" title="choiceKitematicAPP_title" description="choiceKitematicAPP_msg" start_selected="true" start_enabled="true" start_visible="true">
-        <pkg-ref id="io.docker.pkg.kitematicapp"/>
-    </choice>
     <pkg-ref id="io.docker.pkg.docker" auth="Root" version="%DOCKER_VERSION%" installKBytes="%DOCKER_INSTALL_KBYTES%">#docker.pkg</pkg-ref>
     <pkg-ref id="io.docker.pkg.docker">
         <bundle-version/>
     </pkg-ref>
     <pkg-ref id="io.docker.pkg.dockercompose2" auth="Root" version="%DOCKERCOMPOSE2_VERSION%" installKBytes="%DOCKERCOMPOSE2_INSTALL_KBYTES%">#dockercompose2.pkg</pkg-ref>
     <pkg-ref id="io.docker.pkg.dockercompose2">
-        <bundle-version/>
-    </pkg-ref>
-    <pkg-ref id="io.docker.pkg.kitematicapp" auth="Root" version="%KITEMATICAPP_VERSION%" installKBytes="%KITEMATICAPP_INSTALL_KBYTES%">#kitematicapp.pkg</pkg-ref>
-    <pkg-ref id="io.docker.pkg.kitematicapp">
         <bundle-version/>
     </pkg-ref>
     <choice id="choiceVBox" title="choiceVBox_title" description="choiceVBox_msg" start_selected="vboxNeedsUpgrade()" start_enabled="vboxNeedsUpgrade()" start_visible="vboxNeedsUpgrade()">
@@ -67,10 +59,6 @@
     </choice>
     <pkg-ref id="io.docker.pkg.dockerquickstartterminalapp" auth="Root" version="%DOCKERQUICKSTARTTERMINALAPP_VERSION%" installKBytes="%DOCKERQUICKSTARTTERMINALAPP_INSTALL_KBYTES%">#dockerquickstartterminalapp.pkg</pkg-ref>
     <pkg-ref id="io.docker.pkg.dockerquickstartterminalapp">
-        <bundle-version/>
-    </pkg-ref>
-    <pkg-ref id="io.docker.pkg.kitematicapp" auth="Root" version="%KITEMATICAPP_VERSION%" installKBytes="%KITEMATICAPP_INSTALL_KBYTES%">#kitematicapp.pkg</pkg-ref>
-    <pkg-ref id="io.docker.pkg.kitematicapp">
         <bundle-version/>
     </pkg-ref>
     <choice id="choiceDockerMachineCLI" title="choiceDockerMachineCLI_title" description="choiceDockerMachineCLI_msg" start_enabled="false" start_selected="true" start_visible="true">

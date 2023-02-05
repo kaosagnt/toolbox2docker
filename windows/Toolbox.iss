@@ -8,7 +8,6 @@
 #define dockerBuildxCli "..\bundle\plugin\docker-buildx.exe"
 #define dockerMachineCli "..\bundle\docker-machine.exe"
 #define dockerCompose2Cli "..\bundle\plugin\docker-compose.exe"
-#define kitematic "..\bundle\kitematic"
 #define git "..\bundle\Git.exe"
 #define virtualBoxCommon "..\bundle\common.cab"
 #define virtualBoxMsi "..\bundle\VirtualBox_amd64.msi"
@@ -61,7 +60,6 @@ Name: "Docker"; Description: "Docker Client for Windows" ; Types: full custom; F
 Name: "DockerMachine"; Description: "Docker Machine for Windows" ; Types: full custom; Flags: fixed
 Name: "DockerCompose2"; Description: "Docker Compose plugin for Windows" ; Types: full custom
 Name: "VirtualBox"; Description: "VirtualBox"; Types: full custom; Flags: disablenouninstallwarning
-Name: "Kitematic"; Description: "Kitematic for Windows (Alpha)" ; Types: full custom
 Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablenouninstallwarning
 
 [Files]
@@ -72,15 +70,12 @@ Source: ".\docker-start.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components
 Source: "{#dockerBuildxCli}"; DestDir: "\ProgramData\Docker\cli-plugins"; Flags: ignoreversion; Components: "Docker"
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 Source: "{#dockerCompose2Cli}"; DestDir: "\ProgramData\Docker\cli-plugins"; Flags: ignoreversion; Components: "DockerCompose2"
-Source: "{#kitematic}\*"; DestDir: "{app}\kitematic"; Flags: ignoreversion recursesubdirs; Components: "Kitematic"
 Source: "{#b2dIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyBoot2DockerISO()
 Source: "{#git}"; DestDir: "{app}\installers\git"; DestName: "git.exe"; AfterInstall: RunInstallGit();  Components: "Git"
 // Source: "{#virtualBoxCommon}"; DestDir: "{app}\installers\virtualbox"; Components: "VirtualBox"
 Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "virtualbox.msi"; AfterInstall: RunInstallVirtualBox(); Components: "VirtualBox"
 
 [Icons]
-Name: "{userprograms}\Docker\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Components: "Kitematic"
-Name: "{commondesktop}\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Tasks: desktopicon; Components: "Kitematic"
 Name: "{userprograms}\Docker\Docker Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf64}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Docker"
 Name: "{commondesktop}\Docker Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf64}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Docker"
 
@@ -93,7 +88,6 @@ Filename: "{sys}\reg.exe"; Parameters: "delete HKCU\Environment /F /V DOCKER_TLS
 Filename: "{sys}\reg.exe"; Parameters: "delete HKCU\Environment /F /V NO_PROXY"; WorkingDir: "{sys}"
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{localappdata}\..\Roaming\Kitematic"
 
 [Registry]
 Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName:"DOCKER_TOOLBOX_INSTALL_PATH"; ValueData:"{app}" ; Flags: preservestringtype uninsdeletevalue;

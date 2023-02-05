@@ -12,7 +12,6 @@
 		1B4C91BF1B85198100A06068 /* quickstartplugin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B4C91BD1B85198100A06068 /* quickstartplugin.xib */; };
 		1B4C91C21B85198100A06068 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B4C91C01B85198100A06068 /* Localizable.strings */; };
 		1B4C91C41B85198100A06068 /* InstallerSections.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B4C91C31B85198100A06068 /* InstallerSections.plist */; };
-		1B8417E91B85261F00B1FA4D /* kitematic.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B8417E71B85261F00B1FA4D /* kitematic.png */; };
 		1B8417EA1B85261F00B1FA4D /* quickstart.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B8417E81B85261F00B1FA4D /* quickstart.png */; };
 		1BF102C11B8BDEDA00FCB650 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BF102BF1B8BDEDA00FCB650 /* InfoPlist.strings */; };
 		1BF102C41B8BDEDA00FCB650 /* overviewpluginPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF102C31B8BDEDA00FCB650 /* overviewpluginPane.m */; };
@@ -32,7 +31,6 @@
 		1B4C91BE1B85198100A06068 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/quickstartplugin.xib; sourceTree = "<group>"; };
 		1B4C91C11B85198100A06068 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1B4C91C31B85198100A06068 /* InstallerSections.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InstallerSections.plist; sourceTree = "<group>"; };
-		1B8417E71B85261F00B1FA4D /* kitematic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kitematic.png; sourceTree = "<group>"; };
 		1B8417E81B85261F00B1FA4D /* quickstart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quickstart.png; sourceTree = "<group>"; };
 		1BF102BB1B8BDEDA00FCB650 /* overviewplugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = overviewplugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BF102BE1B8BDEDA00FCB650 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 		1B4C91B41B85198100A06068 /* quickstartplugin */ = {
 			isa = PBXGroup;
 			children = (
-				1B8417E71B85261F00B1FA4D /* kitematic.png */,
 				1B8417E81B85261F00B1FA4D /* quickstart.png */,
 				1B4C91BA1B85198100A06068 /* quickstartpluginPane.h */,
 				1B4C91BB1B85198100A06068 /* quickstartpluginPane.m */,
@@ -212,7 +209,6 @@
 				1B8417EA1B85261F00B1FA4D /* quickstart.png in Resources */,
 				1B4C91BF1B85198100A06068 /* quickstartplugin.xib in Resources */,
 				1B4C91C41B85198100A06068 /* InstallerSections.plist in Resources */,
-				1B8417E91B85261F00B1FA4D /* kitematic.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

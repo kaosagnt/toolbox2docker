@@ -15,8 +15,6 @@
         <customObject id="Qsn-FY-4qK" customClass="quickstartpluginPane">
             <connections>
                 <outlet property="contentView" destination="TUK-W2-vig" id="gTd-A7-dof"/>
-                <outlet property="kitematicImageView" destination="Ijs-dB-4JA" id="eiW-Jt-7S1"/>
-                <outlet property="kitematicLabel" destination="jKy-qa-eNn" id="fVj-4X-4Zz"/>
                 <outlet property="parentSection" destination="-2" id="FB7-UV-e8k"/>
                 <outlet property="quickstartImageView" destination="DYu-eG-6Cr" id="tMT-t9-bZk"/>
                 <outlet property="quickstartLabel" destination="O4m-wW-5Fw" id="w1x-eZ-U0H"/>
@@ -44,17 +42,6 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ijs-dB-4JA">
-                    <rect key="frame" x="255" y="157" width="104" height="104"/>
-                    <animations/>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSInfo" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="N0R-Mh-4ck">
-                        <behavior key="behavior" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="kitematicClicked:" target="Qsn-FY-4qK" id="vFc-Zj-4fT"/>
-                    </connections>
-                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O4m-wW-5Fw">
                     <rect key="frame" x="60" y="103" width="118" height="39"/>
                     <animations/>
@@ -62,15 +49,6 @@
                         <font key="font" metaFont="system"/>
                         <string key="title">Docker Quickstart
 Terminal</string>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jKy-qa-eNn">
-                    <rect key="frame" x="254" y="125" width="107" height="17"/>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Kitematic (Beta)" id="fs6-3u-0I6">
-                        <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

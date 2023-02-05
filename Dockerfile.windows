@@ -11,7 +11,6 @@ ARG GITLAB_MACHINE_VERSION
 ARG T2D_MACHINE_VERSION
 ARG GIT_VERSION
 ARG GIT_REVISION
-ARG KITEMATIC_VERSION
 ARG VBOX_VERSION
 ARG VBOX_VERSION_WIN
 ARG VBOX_REV_WIN
@@ -55,12 +54,6 @@ RUN curl -fsSL -o docker-machine.exe "https://github.com/kaosagnt/docker-machine
 RUN curl -fsSL -o plugin/docker-compose.exe "https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE2_VERSION/docker-compose-windows-x86_64.exe"
 
 RUN curl -fsSL -o boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION/boot2docker.iso
-
-RUN curl -fsSL -o kitematic.zip "https://github.com/kitematic/kitematic/releases/download/v$KITEMATIC_VERSION/Kitematic-$KITEMATIC_VERSION-Windows.zip" && \
-    mkdir kitematic && \
-    cd kitematic && \
-    unzip ../kitematic.zip && \
-    rm ../kitematic.zip
 
 RUN if [ $GIT_REVISION -gt 1 ]; then GIT_FILENAME="Git-$GIT_VERSION.$GIT_REVISION-64-bit.exe"; else GIT_FILENAME="Git-$GIT_VERSION-64-bit.exe"; fi; \
 	curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.$GIT_REVISION/$GIT_FILENAME"

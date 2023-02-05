@@ -15,9 +15,6 @@
 'choiceDockerQuickstartTerminalAPP_title' = 'Docker Quickstart Terminal';
 'choiceDockerQuickstartTerminalAPP_msg' = 'Installs the Docker Quickstart Terminal application into /Applications/Docker/';
 
-'choiceKitematicAPP_title' = 'Docker Kitematic %KITEMATICAPP_VERSION%';
-'choiceKitematicAPP_msg' = 'Installs Kitematic into /Applications/Docker/';
-
 'choiceVBox_title' = 'Oracle VM VirtualBox %VBOX_VERSION%';
 'choiceVBox_msg' = 'Installs or Upgrades the Oracle VM VirtualBox application into /Applications if it is not already installed.';
 

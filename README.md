@@ -83,7 +83,7 @@ XXX TODO: fix documentation
 
 The Toolbox2docker installs everything you need to get started with
 Docker on Mac OS X and Windows. It includes the Docker client, Compose,
-Machine, Kitematic, and VirtualBox.
+Machine and VirtualBox.
 
 ## Installation and documentation
 

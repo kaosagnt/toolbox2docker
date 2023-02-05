@@ -10,8 +10,6 @@
 
 @interface quickstartpluginPane : InstallerPane
 @property (weak) IBOutlet NSButton *quickstartImageView;
-@property (weak) IBOutlet NSButton *kitematicImageView;
 @property (weak) IBOutlet NSTextField *quickstartLabel;
-@property (weak) IBOutlet NSTextField *kitematicLabel;
 
 @end
