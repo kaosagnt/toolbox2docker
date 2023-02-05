@@ -207,7 +207,7 @@ begin
   TrackingCheckBox.Width := WizardForm.WelcomeLabel2.Width;
   TrackingCheckBox.Height := 28;
   TrackingCheckBox.Caption := 'Help Docker improve Toolbox.';
-  TrackingCheckBox.Checked := True;
+  TrackingCheckBox.Checked := False;
   TrackingCheckBox.Parent := WelcomePage.Surface;
 
   TrackingLabel := TLabel.Create(WizardForm);
