@@ -23,7 +23,6 @@ echo "Removing docker binaries..."
 rm -f /usr/local/bin/docker
 rm -f /usr/local/bin/docker-machine
 rm -r /usr/local/bin/docker-machine-driver*
-rm -f /usr/local/bin/docker-compose
 rm -rf /usr/local/lib/docker
 
 echo "Removing boot2docker.iso"
@@ -31,7 +30,6 @@ rm -rf /usr/local/share/boot2docker
 
 echo "Forget packages"
 pkgutil --forget io.docker.pkg.docker
-pkgutil --forget io.docker.pkg.dockercompose
 pkgutil --forget io.docker.pkg.dockercompose2
 pkgutil --forget io.docker.pkg.dockermachine
 pkgutil --forget io.boot2dockeriso.pkg.boot2dockeriso

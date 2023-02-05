@@ -7,7 +7,6 @@
     <choices-outline>
         <line choice="choiceDockerCLI"/>
         <line choice="choiceDockerMachineCLI"/>
-        <line choice="choiceDockerComposeCLI"/>
         <line choice="choiceDockerCompose2CLI"/>
         <line choice="choiceDockerQuickstartTerminalAPP"/>
         <line choice="choiceKitematicAPP"/>
@@ -17,9 +16,6 @@
     <choice id="choiceDockerCLI" title="choiceDockerCLI_title" description="choiceDockerCLI_msg" start_enabled="false" start_selected="true" start_visible="true">
         <pkg-ref id="io.docker.pkg.docker"/>
     </choice>
-    <choice id="choiceDockerComposeCLI" title="choiceDockerComposeCLI_title" description="choiceDockerComposeCLI_msg" start_selected="true" start_enabled="true" start_visible="true">
-        <pkg-ref id="io.docker.pkg.dockercompose"/>
-    </choice>
     <choice id="choiceDockerCompose2CLI" title="choiceDockerCompose2CLI_title" description="choiceDockerCompose2CLI_msg" start_selected="true" start_enabled="true" start_visible="true">
         <pkg-ref id="io.docker.pkg.dockercompose2"/>
     </choice>
@@ -28,10 +24,6 @@
     </choice>
     <pkg-ref id="io.docker.pkg.docker" auth="Root" version="%DOCKER_VERSION%" installKBytes="%DOCKER_INSTALL_KBYTES%">#docker.pkg</pkg-ref>
     <pkg-ref id="io.docker.pkg.docker">
-        <bundle-version/>
-    </pkg-ref>
-    <pkg-ref id="io.docker.pkg.dockercompose" auth="Root" version="%DOCKERCOMPOSE_VERSION%" installKBytes="%DOCKERCOMPOSE_INSTALL_KBYTES%">#dockercompose.pkg</pkg-ref>
-    <pkg-ref id="io.docker.pkg.dockercompose">
         <bundle-version/>
     </pkg-ref>
     <pkg-ref id="io.docker.pkg.dockercompose2" auth="Root" version="%DOCKERCOMPOSE2_VERSION%" installKBytes="%DOCKERCOMPOSE2_INSTALL_KBYTES%">#dockercompose2.pkg</pkg-ref>

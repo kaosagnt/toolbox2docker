@@ -6,9 +6,6 @@
 'choiceDockerMachineCLI_title' = 'Docker Machine %DOCKERMACHINE_VERSION%';
 'choiceDockerMachineCLI_msg' = 'Installs the Docker Machine binaries into /usr/local/bin/';
 
-'choiceDockerComposeCLI_title' = 'Docker Compose %DOCKERCOMPOSE_VERSION%';
-'choiceDockerComposeCLI_msg' = 'Installs the Docker Compose binary into /usr/local/bin/';
-
 'choiceDockerCompose2CLI_title' = 'Docker Compose %DOCKERCOMPOSE2_VERSION% plugin';
 'choiceDockerCompose2CLI_msg' = 'Installs the Docker Compose binary into /usr/local/lib/docker/cli-plugins';
 

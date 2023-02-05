@@ -32,7 +32,7 @@ The following list of components is included with this Toolbox release.  If you 
 **Included Components**
 - docker \`${DOCKER_VERSION}\`
 - docker-machine \`${DOCKER_MACHINE_VERSION}\`
-- docker-compose \`${DOCKER_COMPOSE_VERSION}\`
+- docker-compose plugin \`${DOCKER_COMPOSE2_VERSION}\`
 - Kitematic \`${KITEMATIC_VERSION}\`
 - Boot2Docker ISO \`${DOCKER_VERSION}\`
 - VirtualBox \`${VBOX_VERSION}\`" \

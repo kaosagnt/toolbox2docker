@@ -3,7 +3,6 @@ FROM debian:bullseye-slim
 ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
 ARG DOCKER_VERSION
-ARG DOCKER_COMPOSE_VERSION
 ARG DOCKER_COMPOSE2_VERSION
 ARG DOCKER_MACHINE_VERSION
 ARG GITLAB_MACHINE_VERSION
@@ -58,9 +57,6 @@ RUN chmod +x /docker && chmod +x /cli-plugins/*
 RUN curl -fsSL -o /docker-machine https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION/docker-machine-Darwin-x86_64
 
 RUN chmod +x /docker-machine
-
-RUN curl -fsSL -o /docker-compose https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Darwin-x86_64
-RUN chmod +x /docker-compose
 
 # Docker Compose 2.x is now a plugin.
 RUN curl -fsSL -o /docker-compose2 https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE2_VERSION/docker-compose-darwin-x86_64
@@ -145,24 +141,6 @@ RUN cd /mpkg/dockermachine.pkg && \
 	cd .. && \
 	rm -rf ./rootfs
 
-# dockercompose.pkg
-COPY osx/mpkg/dockercompose.pkg /mpkg/dockercompose.pkg
-RUN cd /mpkg/dockercompose.pkg && \
-	mkdir rootfs && \
-	cd rootfs && \
-  mkdir -p usr/local/bin && \
-  mv /docker-compose usr/local/bin/ && \
-  ls -al /usr/local/bin/ && \
-	find . | cpio -o --format odc | gzip -c > ../Payload && \
-	mkbom . ../Bom && \
-	sed -i \
-		-e "s/%DOCKERCOMPOSE_NUMBER_OF_FILES%/`find . | wc -l`/g" \
-		-e "s/%DOCKERCOMPOSE_INSTALL_KBYTES%/`du -sk | cut -f1`/g" \
-		-e "s/%DOCKERCOMPOSE_VERSION%/$DOCKER_COMPOSE_VERSION/g" \
-		../PackageInfo /mpkg/Distribution && \
-	cd .. && \
-	rm -rf ./rootfs
-
 # dockercompose2.pkg
 COPY osx/mpkg/dockercompose2.pkg /mpkg/dockercompose2.pkg
 RUN cd /mpkg/dockercompose2.pkg && \
@@ -236,7 +214,6 @@ RUN sed -i \
 		-e "s/%VBOX_VERSION%/$VBOX_VERSION/g" \
 		-e "s/%DOCKER_VERSION%/$DOCKER_VERSION/g" \
 		-e "s/%DOCKERMACHINE_VERSION%/$DOCKER_MACHINE_VERSION/g" \
-		-e "s/%DOCKERCOMPOSE_VERSION%/$DOCKER_COMPOSE_VERSION/g" \
 		-e "s/%DOCKERCOMPOSE2_VERSION%/$DOCKER_COMPOSE2_VERSION/g" \
 		-e "s/%DOCKER_VERSION%/$DOCKER_VERSION/g" \
 		-e "s/%DOCKERQUICKSTARTTERMINALAPP_VERSION%/$INSTALLER_VERSION/g" \
