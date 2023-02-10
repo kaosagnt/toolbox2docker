@@ -61,7 +61,6 @@ Name: "DockerMachine"; Description: "Docker Machine for Windows" ; Types: full c
 Name: "DockerCompose2"; Description: "Docker Compose plugin for Windows" ; Types: full custom
 Name: "VirtualBox"; Description: "VirtualBox"; Types: full custom; Flags: disablenouninstallwarning
 Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablenouninstallwarning
-Name: "Dummy"; Description: "Does nothing but stop innosetup from crashing - kitematic has been removed from the install"
 
 [Files]
 Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversion
@@ -225,7 +224,7 @@ begin
     // Don't do this until we can compare versions
     // Wizardform.ComponentsList.Checked[3] := NeedToInstallVirtualBox();
     Wizardform.ComponentsList.ItemEnabled[3] := not NeedToInstallVirtualBox();
-    Wizardform.ComponentsList.Checked[5] := NeedToInstallGit();
+    Wizardform.ComponentsList.Checked[4] := NeedToInstallGit();
 end;
 
 function InitializeSetup(): boolean;
