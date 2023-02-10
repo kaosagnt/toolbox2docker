@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
 ARG DOCKER_VERSION
+ARG DOCKER_BUILDX_VERSION
 ARG DOCKER_COMPOSE2_VERSION
 ARG DOCKER_MACHINE_VERSION
 ARG GITLAB_MACHINE_VERSION
@@ -43,8 +44,7 @@ RUN mkdir -p /bundle/plugin
 
 WORKDIR /bundle
 
-RUN cp /docker/docker.exe .; \
-	cp /docker/cli-plugins/* plugin/
+RUN cp /docker/docker.exe .
 
 #RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
 #RUN curl -fsSL -o docker-machine.exe "https://gitlab-docker-machine-downloads.s3.amazonaws.com/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
@@ -52,6 +52,9 @@ RUN curl -fsSL -o docker-machine.exe "https://github.com/kaosagnt/docker-machine
 
 # Docker compose 2.x
 RUN curl -fsSL -o plugin/docker-compose.exe "https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE2_VERSION/docker-compose-windows-x86_64.exe"
+
+# Docker Buildx plugin
+RUN curl -fsSL -o plugin/docker-buildx.exe "https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.windows-amd64.exe"
 
 RUN curl -fsSL -o boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION/boot2docker.iso
 

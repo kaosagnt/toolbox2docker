@@ -3,6 +3,7 @@ FROM debian:bullseye-slim
 ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
 ARG DOCKER_VERSION
+ARG DOCKER_BUILDX_VERSION
 ARG DOCKER_COMPOSE2_VERSION
 ARG DOCKER_MACHINE_VERSION
 ARG GITLAB_MACHINE_VERSION
@@ -46,9 +47,16 @@ RUN curl -fsSL -o /vbox.dmg "$VBOX_DIR/VirtualBox-$VBOX_VERSION-$VBOX_REV-OSX.dm
 # `usr/local/bin` part and drop the bin in the current directory.
 RUN curl -fsSL -o dockerbins.tgz "https://download.docker.com/mac/static/${DOCKER_RELEASE_STAGE}/x86_64/docker-${DOCKER_VERSION}.tgz" && \
     tar xvf dockerbins.tgz docker/docker --strip-components 1 && \
-    tar xvf dockerbins.tgz docker/cli-plugins/docker-buildx \
-			--strip-components 1 && \
     rm dockerbins.tgz
+
+#    tar xvf dockerbins.tgz docker/cli-plugins/docker-buildx \
+#			--strip-components 1 && \
+
+# docker buildx plugin
+RUN mkdir cli-plugins && \
+	curl -fsSL -o cli-plugins/docker-buildx \
+	"https://github.com/docker/buildx/releases/download/v${DOCKER_BUILDX_VERSION}/buildx-v${DOCKER_BUILDX_VERSION}.darwin-amd64"
+
 RUN chmod +x /docker && chmod +x /cli-plugins/*
 
 #RUN curl -fsSL -o /docker-machine https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Darwin-x86_64
