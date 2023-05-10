@@ -12,7 +12,6 @@ ARG GITLAB_MACHINE_VERSION
 ARG T2D_MACHINE_VERSION
 ARG GIT_VERSION
 ARG GIT_REVISION
-ARG VBOX_VERSION
 ARG VBOX_VERSION_WIN
 ARG VBOX_REV_WIN
 ARG MIXPANEL_TOKEN
@@ -61,9 +60,10 @@ RUN curl -fsSL -o boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng
 RUN if [ $GIT_REVISION -gt 1 ]; then GIT_FILENAME="Git-$GIT_VERSION.$GIT_REVISION-64-bit.exe"; else GIT_FILENAME="Git-$GIT_VERSION-64-bit.exe"; fi; \
 	curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.$GIT_REVISION/$GIT_FILENAME"
 
-ENV VBOX_DIR https://download.virtualbox.org/virtualbox/$VBOX_VERSION
+ENV VBOX_DIR "https://download.virtualbox.org/virtualbox/$VBOX_VERSION_WIN"
+ENV VBOX_EXE "$VBOX_DIR/VirtualBox-$VBOX_VERSION_WIN-$VBOX_REV_WIN-Win.exe"
 
-RUN curl -fsSL -o virtualbox.exe "$VBOX_DIR/VirtualBox-$VBOX_VERSION_WIN-$VBOX_REV_WIN-Win.exe" \
+RUN curl -fsSL -o virtualbox.exe "$VBOX_EXE" \
 	&& echo "$(curl -fsSL "$VBOX_DIR"'/SHA256SUMS' | awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" | sha256sum -c -
 
 RUN wine virtualbox.exe -extract -silent -path . && \
