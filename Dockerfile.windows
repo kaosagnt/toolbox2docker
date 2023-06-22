@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -17,7 +17,7 @@ ARG VBOX_REV_WIN
 ARG MIXPANEL_TOKEN
 
 RUN dpkg --add-architecture i386
-RUN sed -i "s/main/main contrib non-free/" /etc/apt/sources.list
+RUN sed -i "s/main/main contrib non-free/" /etc/apt/sources.list.d/debian.sources
 RUN apt-get update && apt-get install -yq wine curl unrar unzip
 
 # innosetup
