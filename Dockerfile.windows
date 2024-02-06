@@ -45,8 +45,6 @@ WORKDIR /bundle
 
 RUN cp /docker/docker.exe .
 
-#RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
-#RUN curl -fsSL -o docker-machine.exe "https://gitlab-docker-machine-downloads.s3.amazonaws.com/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
 RUN curl -fsSL -o docker-machine.exe "https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
 
 # Docker compose 2.x
@@ -60,11 +58,13 @@ RUN curl -fsSL -o boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng
 RUN if [ $GIT_REVISION -gt 1 ]; then GIT_FILENAME="Git-$GIT_VERSION.$GIT_REVISION-64-bit.exe"; else GIT_FILENAME="Git-$GIT_VERSION-64-bit.exe"; fi; \
 	curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.$GIT_REVISION/$GIT_FILENAME"
 
-ENV VBOX_DIR "https://download.virtualbox.org/virtualbox/$VBOX_VERSION_WIN"
-ENV VBOX_EXE "$VBOX_DIR/VirtualBox-$VBOX_VERSION_WIN-$VBOX_REV_WIN-Win.exe"
+ENV VBOX_URL "https://download.virtualbox.org/virtualbox/$VBOX_VERSION_WIN"
+ENV VBOX_EXE "$VBOX_URL/VirtualBox-$VBOX_VERSION_WIN-$VBOX_REV_WIN-Win.exe"
 
 RUN curl -fsSL -o virtualbox.exe "$VBOX_EXE" \
-	&& echo "$(curl -fsSL "$VBOX_DIR"'/SHA256SUMS' | awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" | sha256sum -c -
+	&& echo "$(curl -fsSL "$VBOX_URL"'/SHA256SUMS' \
+	| awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" \
+	| sha256sum -c -
 
 RUN wine virtualbox.exe -extract -silent -path . && \
 	  rm virtualbox.exe && \
