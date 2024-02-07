@@ -92,7 +92,15 @@ RUN curl -fsSL -o /docker-compose2 \
 
 RUN chmod +x /docker-compose2
 
-RUN curl -fsSL -o /boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION/boot2docker.iso
+# boot2docker iso
+ENV BOOT2DOCKER_URL "https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION"
+ENV BOOT2DOCKER_FILE "boot2docker.iso"
+
+RUN curl -fsSL -o /boot2docker.iso \
+	"$BOOT2DOCKER_URL/$BOOT2DOCKER_FILE" \
+	&& echo "$(curl -fsSL "$BOOT2DOCKER_URL"'/SHA256SUMS.txt' \
+	| awk '$2 ~ /iso$/ { print $1 }') */boot2docker.iso" \
+	| sha256sum -c -
 
 #  Extract the VirtualBox .pkg
 RUN mkdir -p /mpkg/vbox && \

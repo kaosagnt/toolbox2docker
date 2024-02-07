@@ -75,8 +75,17 @@ RUN curl -fsSL -o plugin/docker-buildx.exe \
 	| awk '$2 ~ /windows-amd64.exe$/ { print $1 }') *plugin/docker-buildx.exe" \
 	| sha256sum -c -
 
-RUN curl -fsSL -o boot2docker.iso https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION/boot2docker.iso
+# boot2docker iso
+ENV BOOT2DOCKER_URL "https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION"
+ENV BOOT2DOCKER_FILE "boot2docker.iso"
 
+RUN curl -fsSL -o boot2docker.iso \
+	"$BOOT2DOCKER_URL/$BOOT2DOCKER_FILE" \
+	&& echo "$(curl -fsSL "$BOOT2DOCKER_URL"'/SHA256SUMS.txt' \
+	| awk '$2 ~ /iso$/ { print $1 }') *boot2docker.iso" \
+	| sha256sum -c -
+
+# Git
 RUN if [ $GIT_REVISION -gt 1 ]; then GIT_FILENAME="Git-$GIT_VERSION.$GIT_REVISION-64-bit.exe"; else GIT_FILENAME="Git-$GIT_VERSION-64-bit.exe"; fi; \
 	curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.$GIT_REVISION/$GIT_FILENAME"
 
