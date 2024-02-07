@@ -45,7 +45,15 @@ WORKDIR /bundle
 
 RUN cp /docker/docker.exe .
 
-RUN curl -fsSL -o docker-machine.exe "https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
+# Docker Machine
+ENV DOCKER_MACHINE_URL "https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION"
+ENV DOCKER_MACHINE_FILE "docker-machine-Windows-x86_64.exe"
+
+RUN curl -fsSL -o docker-machine.exe \
+	"$DOCKER_MACHINE_URL/$DOCKER_MACHINE_FILE" \
+	&& echo "$(curl -fsSL "$DOCKER_MACHINE_URL"'/SHA256SUMS.txt' \
+	| awk '$2 ~ /Windows-x86_64.exe$/ { print $1 }') *docker-machine.exe" \
+	| sha256sum -c -
 
 # Docker compose 2.x
 ENV DOCKER_COMPOSE2_URL "https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE2_VERSION"

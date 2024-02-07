@@ -68,7 +68,15 @@ RUN mkdir cli-plugins && \
 
 RUN chmod +x /docker && chmod +x /cli-plugins/*
 
-RUN curl -fsSL -o /docker-machine https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION/docker-machine-Darwin-x86_64
+# Docker Machine
+ENV DOCKER_MACHINE_URL "https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION"
+ENV DOCKER_MACHINE_FILE "docker-machine-Darwin-x86_64"
+
+RUN curl -fsSL -o /docker-machine \
+	"$DOCKER_MACHINE_URL/$DOCKER_MACHINE_FILE" \
+	&& echo "$(curl -fsSL "$DOCKER_MACHINE_URL"'/SHA256SUMS.txt' \
+	| awk '$2 ~ /Darwin-x86_64$/ { print $1 }') */docker-machine" \
+	| sha256sum -c -
 
 RUN chmod +x /docker-machine
 
