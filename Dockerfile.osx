@@ -106,7 +106,6 @@ RUN curl -fsSL -o /boot2docker.iso \
 RUN mkdir -p /mpkg/vbox && \
 	cd /mpkg/vbox && \
 	7zz x /vbox.dmg -ir'!*.pkg' && \
-	mv VirtualBox/VirtualBox.pkg . && \
 	rm -rf vbox.dmg
 
 # Extract the .pkg files
