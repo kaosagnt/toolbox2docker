@@ -15,6 +15,7 @@ ARG GIT_REVISION
 ARG VBOX_VERSION_WIN
 ARG VBOX_REV_WIN
 ARG MIXPANEL_TOKEN
+ARG VARIANT
 
 RUN dpkg --add-architecture i386
 RUN sed -i "s/main/main contrib non-free/" /etc/apt/sources.list.d/debian.sources
@@ -92,18 +93,30 @@ RUN if [ $GIT_REVISION -gt 1 ]; then GIT_FILENAME="Git-$GIT_VERSION.$GIT_REVISIO
 ENV VBOX_URL "https://download.virtualbox.org/virtualbox/$VBOX_VERSION_WIN"
 ENV VBOX_EXE "$VBOX_URL/VirtualBox-$VBOX_VERSION_WIN-$VBOX_REV_WIN-Win.exe"
 
-RUN curl -fsSL -o virtualbox.exe "$VBOX_EXE" \
-	&& echo "$(curl -fsSL "$VBOX_URL"'/SHA256SUMS' \
-	| awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" \
-	| sha256sum -c -
+RUN if [ "$VARIANT" != "-lite" ]; then \
+		curl -fsSL -o virtualbox.exe "$VBOX_EXE" \
+		&& echo "$(curl -fsSL "$VBOX_URL"'/SHA256SUMS' \
+		| awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" \
+		| sha256sum -c -; \
+	fi
 
-RUN wine virtualbox.exe -extract -silent -path . && \
-	  rm virtualbox.exe && \
-	  mv *.msi VirtualBox_amd64.msi
+RUN if [ "$VARIANT" != "-lite" ]; then \
+		wine virtualbox.exe -extract -silent -path . && \
+		rm virtualbox.exe && \
+		mv *.msi VirtualBox_amd64.msi; \
+	fi
 
 # Add installer resources
 COPY windows /installer
 
 WORKDIR /installer
 RUN rm -rf /tmp/.wine-0/
-RUN wine ../innosetup/ISCC.exe Toolbox.iss /DMyAppVersion=$INSTALLER_VERSION /DMixpanelToken=$MIXPANEL_TOKEN
+RUN if [ "$VARIANT" = "-lite" ]; then \
+		sed -i 's|^#define MyAppName "Toolbox2docker"|#define MyAppName "Toolbox2docker'$VARIANT'"|g' Toolbox.iss; \
+		sed -i 's|^AppId=.*$|AppId={{5DFD8320-1E10-11EF-9E35-0800200C9A66}|g' Toolbox.iss; \
+		sed -i 's|^Name: vbox_ndis5;|// Name: vbox_ndis5;|g' Toolbox.iss; \
+		sed -i 's|^Name: "VirtualBox";|// Name: "VirtualBox";|g' Toolbox.iss; \
+		sed -i 's|^Source: "{#virtualBoxMsi}"|// Source: "{#virtualBoxMsi}"|g' Toolbox.iss; \
+		sed -i 's|Wizardform\.ComponentsList\.|// Wizardform\.ComponentsList\.|g' Toolbox.iss; \
+	fi && \
+	wine ../innosetup/ISCC.exe Toolbox.iss /DMyAppVersion=$INSTALLER_VERSION /DMixpanelToken=$MIXPANEL_TOKEN
