@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
@@ -46,8 +46,8 @@ WORKDIR /bundle
 RUN cp /docker/docker.exe .
 
 # Docker Machine
-ENV DOCKER_MACHINE_URL "https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION"
-ENV DOCKER_MACHINE_FILE "docker-machine-Windows-x86_64.exe"
+ENV DOCKER_MACHINE_URL="https://github.com/kaosagnt/docker-machine/releases/download/v$DOCKER_MACHINE_VERSION-$GITLAB_MACHINE_VERSION-$T2D_MACHINE_VERSION"
+ENV DOCKER_MACHINE_FILE="docker-machine-Windows-x86_64.exe"
 
 RUN curl -fsSL -o docker-machine.exe \
 	"$DOCKER_MACHINE_URL/$DOCKER_MACHINE_FILE" \
@@ -56,8 +56,8 @@ RUN curl -fsSL -o docker-machine.exe \
 	| sha256sum -c -
 
 # Docker compose 2.x
-ENV DOCKER_COMPOSE2_URL "https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE2_VERSION"
-ENV DOCKER_COMPOSE2_FILE "docker-compose-windows-x86_64.exe"
+ENV DOCKER_COMPOSE2_URL="https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE2_VERSION"
+ENV DOCKER_COMPOSE2_FILE="docker-compose-windows-x86_64.exe"
 
 RUN curl -fsSL -o plugin/docker-compose.exe \
 	"$DOCKER_COMPOSE2_URL/$DOCKER_COMPOSE2_FILE" \
@@ -66,8 +66,8 @@ RUN curl -fsSL -o plugin/docker-compose.exe \
 	| sha256sum -c -
 
 # Docker Buildx plugin
-ENV DOCKER_BUILDX_URL "https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION"
-ENV DOCKER_BUILDX_FILE "buildx-v${DOCKER_BUILDX_VERSION}.windows-amd64.exe"
+ENV DOCKER_BUILDX_URL="https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION"
+ENV DOCKER_BUILDX_FILE="buildx-v${DOCKER_BUILDX_VERSION}.windows-amd64.exe"
 
 RUN curl -fsSL -o plugin/docker-buildx.exe \
 	"$DOCKER_BUILDX_URL/$DOCKER_BUILDX_FILE" \
@@ -76,8 +76,8 @@ RUN curl -fsSL -o plugin/docker-buildx.exe \
 	| sha256sum -c -
 
 # boot2docker iso
-ENV BOOT2DOCKER_URL "https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION"
-ENV BOOT2DOCKER_FILE "boot2docker.iso"
+ENV BOOT2DOCKER_URL="https://github.com/kaosagnt/boot2docker-xfs-ng/releases/download/$DOCKER_VERSION"
+ENV BOOT2DOCKER_FILE="boot2docker.iso"
 
 RUN curl -fsSL -o boot2docker.iso \
 	"$BOOT2DOCKER_URL/$BOOT2DOCKER_FILE" \
@@ -89,8 +89,8 @@ RUN curl -fsSL -o boot2docker.iso \
 RUN if [ $GIT_REVISION -gt 1 ]; then GIT_FILENAME="Git-$GIT_VERSION.$GIT_REVISION-64-bit.exe"; else GIT_FILENAME="Git-$GIT_VERSION-64-bit.exe"; fi; \
 	curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.$GIT_REVISION/$GIT_FILENAME"
 
-ENV VBOX_URL "https://download.virtualbox.org/virtualbox/$VBOX_VERSION_WIN"
-ENV VBOX_EXE "$VBOX_URL/VirtualBox-$VBOX_VERSION_WIN-$VBOX_REV_WIN-Win.exe"
+ENV VBOX_URL="https://download.virtualbox.org/virtualbox/$VBOX_VERSION_WIN"
+ENV VBOX_EXE="$VBOX_URL/VirtualBox-$VBOX_VERSION_WIN-$VBOX_REV_WIN-Win.exe"
 
 RUN curl -fsSL -o virtualbox.exe "$VBOX_EXE" \
 	&& echo "$(curl -fsSL "$VBOX_URL"'/SHA256SUMS' \
