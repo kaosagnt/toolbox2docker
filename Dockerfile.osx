@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
@@ -13,20 +13,16 @@ ARG VBOX_VERSION_ALPHA
 ARG VBOX_REV
 ARG MIXPANEL_TOKEN
 
-RUN echo "deb http://deb.debian.org/debian bullseye-backports main" \
-	> /etc/apt/sources.list.d/backports.list && \
-		apt-get update && \
+RUN		apt-get update && \
 		apt-get -y install \
 		apt-utils autoconf build-essential curl \
 		libxml2-dev libssl-dev libbz2-dev \
-		zlib1g-dev \
-		cpio \
-		&& apt-get -y install -t bullseye-backports 7zip
+		zlib1g-dev cpio 7zip
 
 # We need the bomutils to create the Mac OS X Bill of Materials (BOM) files.
 # https://github.com/hogliux/bomutils
-RUN curl -fsSL https://github.com/hogliux/bomutils/archive/0.2.tar.gz | tar xvz && \
-	cd bomutils-* && \
+RUN curl -fsSL https://github.com/hogliux/bomutils/archive/refs/heads/master.tar.gz | tar xvz && \
+	cd bomutils* && \
 	make && make install
 
 # Needed to pack/unpack the .pkg files
