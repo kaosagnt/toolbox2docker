@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 ARG DOCKER_RELEASE_STAGE
 ARG INSTALLER_VERSION
@@ -17,7 +17,7 @@ RUN		apt-get update && \
 		apt-get -y install \
 		apt-utils autoconf build-essential curl \
 		libxml2-dev libssl-dev libbz2-dev \
-		zlib1g-dev cpio 7zip
+		zlib1g-dev cpio 7zip-standalone
 
 # We need the bomutils to create the Mac OS X Bill of Materials (BOM) files.
 # https://github.com/hogliux/bomutils
