@@ -67,9 +67,9 @@ Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
 Source: ".\docker-start.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
-Source: "{#dockerBuildxCli}"; DestDir: "\ProgramData\Docker\cli-plugins"; Flags: ignoreversion; Components: "Docker"
+Source: "{#dockerBuildxCli}"; DestDir: "\Program Files\Docker\cli-plugins"; Flags: ignoreversion; Components: "Docker"
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
-Source: "{#dockerCompose2Cli}"; DestDir: "\ProgramData\Docker\cli-plugins"; Flags: ignoreversion; Components: "DockerCompose2"
+Source: "{#dockerCompose2Cli}"; DestDir: "\Program Files\Docker\cli-plugins"; Flags: ignoreversion; Components: "DockerCompose2"
 Source: "{#b2dIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyBoot2DockerISO()
 Source: "{#git}"; DestDir: "{app}\installers\git"; DestName: "git.exe"; AfterInstall: RunInstallGit();  Components: "Git"
 // Source: "{#virtualBoxCommon}"; DestDir: "{app}\installers\virtualbox"; Components: "VirtualBox"
