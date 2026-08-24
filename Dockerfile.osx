@@ -55,7 +55,10 @@ ENV DOCKER_BUILDX_FILE="buildx-v$DOCKER_BUILDX_VERSION.darwin-amd64"
 
 RUN mkdir cli-plugins && \
 	curl -fsSL -o cli-plugins/docker-buildx \
-	"$DOCKER_BUILDX_URL/$DOCKER_BUILDX_FILE"
+	"$DOCKER_BUILDX_URL/$DOCKER_BUILDX_FILE" \
+	&& echo "$(curl -fsSL "$DOCKER_BUILDX_URL"'/checksums-signed.txt' \
+	| awk '$2 ~ /darwin-amd64$/ { print $1 }') *cli-plugins/docker-buildx" \
+	| sha256sum -c -
 
 # Currently there are no sha256 hashes for darwin in checksums.txt
 #	&& echo "$(curl -fsSL "$DOCKER_BUILDX_URL"'/checksums.txt' \

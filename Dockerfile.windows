@@ -71,7 +71,7 @@ ENV DOCKER_BUILDX_FILE="buildx-v${DOCKER_BUILDX_VERSION}.windows-amd64.exe"
 
 RUN curl -fsSL -o plugin/docker-buildx.exe \
 	"$DOCKER_BUILDX_URL/$DOCKER_BUILDX_FILE" \
-	&& echo "$(curl -fsSL "$DOCKER_BUILDX_URL"'/checksums.txt' \
+	&& echo "$(curl -fsSL "$DOCKER_BUILDX_URL"'/checksums-signed.txt' \
 	| awk '$2 ~ /windows-amd64.exe$/ { print $1 }') *plugin/docker-buildx.exe" \
 	| sha256sum -c -
 
