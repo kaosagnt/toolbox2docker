@@ -129,4 +129,6 @@ The resulting installers will be in the `dist` directory.
 
 **Do I have to install VirtualBox?**
 
-No, you can deselect VirtualBox during installation. It is bundled in case you want to have a working environment for free.
+No, there is a lite version that comes without VirtualBox.
+
+You can also deselect VirtualBox during installation in the default installer. It is bundled in case you want to have a working environment for free.

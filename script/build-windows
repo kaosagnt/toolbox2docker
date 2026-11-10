@@ -3,25 +3,32 @@
 set -e
 
 . versions
-docker build \
-	-t windows-installer \
-	-f Dockerfile.windows \
-	--build-arg DOCKER_RELEASE_STAGE="${DOCKER_RELEASE_STAGE}" \
-	--build-arg INSTALLER_VERSION="${INSTALLER_VERSION}" \
-	--build-arg DOCKER_VERSION="${DOCKER_VERSION}" \
-	--build-arg DOCKER_BUILDX_VERSION="${DOCKER_BUILDX_VERSION}" \
-	--build-arg DOCKER_COMPOSE2_VERSION="${DOCKER_COMPOSE2_VERSION}" \
-	--build-arg DOCKER_MACHINE_VERSION="${DOCKER_MACHINE_VERSION}" \
-	--build-arg GITLAB_MACHINE_VERSION="${GITLAB_MACHINE_VERSION}" \
-	--build-arg T2D_MACHINE_VERSION="${T2D_MACHINE_VERSION}" \
-	--build-arg GIT_VERSION="${GIT_VERSION}" \
-	--build-arg GIT_REVISION="${GIT_REVISION}" \
-	--build-arg VBOX_VERSION_WIN="${VBOX_VERSION_WIN}" \
-	--build-arg VBOX_REV_WIN="${VBOX_REV_WIN}" \
-	--build-arg MIXPANEL_TOKEN="${MIXPANEL_TOKEN}" \
-	.
-CONTAINER="$(docker create windows-installer)"
-mkdir -p dist
-docker cp "${CONTAINER}":/installer/Output/Toolbox2docker.exe \
-		dist/Toolbox2docker-${INSTALLER_VERSION}.exe
-docker rm "${CONTAINER}" 2>/dev/null || true
+
+declare -a variants=("-lite" "")
+
+for variant in "${variants[@]}"
+do
+	docker build \
+		-t windows-installer"${variant}" \
+		-f Dockerfile.windows \
+		--build-arg VARIANT="${variant}" \
+		--build-arg DOCKER_RELEASE_STAGE="${DOCKER_RELEASE_STAGE}" \
+		--build-arg INSTALLER_VERSION="${INSTALLER_VERSION}" \
+		--build-arg DOCKER_VERSION="${DOCKER_VERSION}" \
+		--build-arg DOCKER_BUILDX_VERSION="${DOCKER_BUILDX_VERSION}" \
+		--build-arg DOCKER_COMPOSE2_VERSION="${DOCKER_COMPOSE2_VERSION}" \
+		--build-arg DOCKER_MACHINE_VERSION="${DOCKER_MACHINE_VERSION}" \
+		--build-arg GITLAB_MACHINE_VERSION="${GITLAB_MACHINE_VERSION}" \
+		--build-arg T2D_MACHINE_VERSION="${T2D_MACHINE_VERSION}" \
+		--build-arg GIT_VERSION="${GIT_VERSION}" \
+		--build-arg GIT_REVISION="${GIT_REVISION}" \
+		--build-arg VBOX_VERSION_WIN="${VBOX_VERSION_WIN}" \
+		--build-arg VBOX_REV_WIN="${VBOX_REV_WIN}" \
+		--build-arg MIXPANEL_TOKEN="${MIXPANEL_TOKEN}" \
+		.
+	CONTAINER="$(docker create windows-installer${variant})"
+	mkdir -p dist
+	docker cp "${CONTAINER}":/installer/Output/Toolbox2docker.exe \
+			dist/Toolbox2docker${variant}-${INSTALLER_VERSION}.exe
+	docker rm "${CONTAINER}" 2>/dev/null || true
+done
